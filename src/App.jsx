@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
-import Sidebar from "./shared/sidebar/SideBar";
-import Navbar from "./shared/navbar";
+import Sidebar from "./shared/sidebar/Sidebar";
+import Navbar from "./shared/Navbar";
 import User from "./component/user/User";
 import Login from "./component/login/Login";
 import Register from "./component/register/Register";

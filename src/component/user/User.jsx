@@ -4,7 +4,7 @@ import { apiService } from '../ApiServices/apiService';
 import Grid from '../../shared/Grid';
 import TaskModal from '../Modal/UserModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { setOpenCustomModal } from '../../Redux/slice/sharedSlice';
+import { setOpenCustomModal, setPageTitle } from '../../Redux/slice/sharedSlice';
 import UserModal from '../Modal/UserModal';
 
 const User = () => {
@@ -14,6 +14,7 @@ const User = () => {
 
   useEffect(() => {
     fetchData();
+    dispatch(setPageTitle("User List"));
   }, []);
 
 

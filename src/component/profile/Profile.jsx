@@ -1,27 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AuthService } from "../login/AuthServices";
+import { setUser } from "../../Redux/slice/authSlice";
+import { setPageTitle } from "../../Redux/slice/sharedSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetchData = async () => {
-    try {
-      const response = await AuthService.fetchUser();
-      setProfileData(response.data);
-      console.log(response.data, "profile");
-
-    } catch (error) {
-      console.error("Error fetching profile data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  console.log(profileData, "po");
-
+  const dispatch = useDispatch();
+  const profileData = useSelector((state) => state.auth.user); 
 
   return (
     <div className="w-full h-full p-5 mx-auto text-center bg-white border rounded-lg shadow-md">
@@ -30,7 +15,9 @@ const Profile = () => {
         alt={`${profileData?.data?.first_name} ${profileData?.data?.last_name}`}
         className="w-24 h-24 mx-auto border-4 border-gray-300 rounded-full"
       />
-      <h2 className="mt-3 text-xl font-semibold">{`${profileData?.data?.first_name} ${profileData?.data?.last_name}`}</h2>
+      <h2 className="mt-3 text-xl font-semibold">
+        {`${profileData?.data?.first_name} ${profileData?.data?.last_name}`}
+      </h2>
       <p className="text-gray-500">{profileData?.data?.email}</p>
 
       {profileData?.support && (

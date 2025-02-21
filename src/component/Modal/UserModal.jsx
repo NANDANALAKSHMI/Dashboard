@@ -20,10 +20,9 @@ const UserModal = ({ task }) => {
     const isOpen = useSelector((state) => state.shared.openCustomModal);
     const selectedData = useSelector((state) => state.shared.selectedData);
 
-    
-
     const [title, setTitle] = useState("");
     const [completed, setCompleted] = useState(false);
+    const [titleError, setTitleError] = useState(""); 
 
     useEffect(() => {
         if (isOpen) {
@@ -34,22 +33,26 @@ const UserModal = ({ task }) => {
                 setTitle("");
                 setCompleted(false);
             }
+            setTitleError(""); 
         }
     }, [isOpen, selectedData]);
-    console.log(selectedData?.id,"ood");
-    
 
     const handleClose = () => {
         dispatch(setSelectedData({}));
         dispatch(setOpenCustomModal(false));
+        setTitleError(""); 
     };
 
     const handleSubmit = async () => {
+        if (!title.trim()) {
+            setTitleError("Title is required");
+            return;
+        }
+
         const taskData = { title, completed };
 
         try {
             if (selectedData?.id) {
-                console.log("Updating Task:", taskData);
                 await apiService.updateSectionList(selectedData.id, taskData);
                 enqueueSnackbar("Updated successfully!", {
                     variant: "success",
@@ -57,7 +60,6 @@ const UserModal = ({ task }) => {
                     anchorOrigin: { vertical: "top", horizontal: "right" },
                 });
             } else {
-                console.log("Submitting Task:", taskData);
                 await apiService.postSectionList(taskData);
                 enqueueSnackbar("Saved successfully!", {
                     variant: "success",
@@ -99,8 +101,13 @@ const UserModal = ({ task }) => {
                     variant="outlined"
                     label="Task Title"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                        setTitle(e.target.value);
+                        if (titleError) setTitleError(""); 
+                    }}
                     margin="dense"
+                    error={!!titleError}
+                    helperText={titleError}
                 />
                 <FormControlLabel
                     control={<Checkbox checked={completed} onChange={() => setCompleted(!completed)} />}

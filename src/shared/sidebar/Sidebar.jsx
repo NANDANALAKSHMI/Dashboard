@@ -55,7 +55,7 @@ const Sidebar = () => {
           </h1>
         </div>
         <div
-          className="h-[calc(100vh-80px)] overflow-y-auto w-[270px] shadow-lg"
+          className="h-[calc(100vh-80px)] overflow-y-auto w-[270px] shadow-lg p-2"
           style={{ scrollbarWidth: "thin", scrollbarColor: "#ccc #BBDEFB" }}
         >
           {menuItems.map((item, index) => (

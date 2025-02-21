@@ -7,6 +7,7 @@ import User from './component/user/User'
 import Login from './component/login/Login'
 import Register from './component/register/Register'
 import verifyToken from './utilis/tokenVerification'
+import Profile from './component/profile/Profile'
 
 
 
@@ -55,6 +56,7 @@ function App() {
                   <div style={{ height: "calc(100dvh - 80px)" }}>
                     <Routes element={<ProtectedRoute/>}>
                       <Route path="/" element={<User />} />
+                      <Route path="/profile" element={<Profile/>} />
                     </Routes>
                   </div>
                 </Box>

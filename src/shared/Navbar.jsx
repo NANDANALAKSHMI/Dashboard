@@ -34,7 +34,7 @@ const Navbar = () => {
             <NotificationsIcon fontSize="medium" />
           </button>
 
-          <div className="cursor-pointer" title="My Account">
+          <div className="cursor-pointer" title="My Account"  onClick={() => navigate("/profile")}>
             <AccountCircleIcon fontSize="large" />
           </div>
         </div>

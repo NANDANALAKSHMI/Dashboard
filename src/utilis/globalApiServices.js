@@ -103,6 +103,22 @@ export const authPostService = (url, data) => {
   });
 };
 
+export const authGetService = (url, params) => {
+  return new Promise(function (resolve, reject) {
+    authAxiosInstance({
+      method: "get",
+      url: url,
+      params: params,
+    })
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        reject(error)
+      });
+  });
+};
+
 
 
 

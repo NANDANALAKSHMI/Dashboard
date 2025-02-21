@@ -1,4 +1,4 @@
-import { authPostService } from "../../utilis/globalApiServices";
+import { authGetService, authPostService} from "../../utilis/globalApiServices";
 
 const adminLogin = async (data) => {
     try {
@@ -19,9 +19,19 @@ const adminRegister = async (data) => {
         throw error;
     }
 }
+const fetchUser = async (data) => {
+    try {
+      const response = await authGetService( '/users/2',data);
+      return response;
+    } catch (error) {
+      console.error(`Error fetching list :`, error);
+      throw error;
+    }
+  };
 
 export const AuthService = {
     adminLogin,
-    adminRegister
+    adminRegister,
+    fetchUser
    
 }

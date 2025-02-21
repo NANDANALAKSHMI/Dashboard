@@ -11,7 +11,6 @@ const fetchSectionList = async () => {
   };
 
   const deleteSection = async (id) => {
-    debugger
     try {
       const response = await globalDeleteService(`/${id}`);
       return response;

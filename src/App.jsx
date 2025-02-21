@@ -1,22 +1,45 @@
 import { useState } from 'react'
 import Sidebar from './shared/sidebar/SideBar'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { Box } from '@mui/material'
 import Navbar from './shared/navbar'
+import User from './component/user/User'
+import Login from './component/login/Login'
+import Register from './component/register/Register'
+import verifyToken from './utilis/tokenVerification'
+
 
 
 function App() {
+
+  const ProtectedRoute = () => {
+    const isAuthenticated = verifyToken();
+    const currentPath = window.location.pathname;
+
+    if (currentPath.startsWith('/reset-password')) {
+      return <Outlet />;
+    }
+
+    return isAuthenticated.status ? <Outlet /> : <Navigate to="/login" />;
+  };
+  const IsLogged = () => {
+    const logged = verifyToken();
+    const currentPath = window.location.pathname;
+
+    if (currentPath.startsWith('/reset-password')) {
+      return <Outlet />;
+    }
+    return !logged.status ? <Outlet /> : <Navigate to="/" />;
+  };
 
 
   return (
     <>
       <Routes>
-        {/* element={<ProtectedRoute />} */}
-        {/* <Route element={<IsLogged />}>
-              <Route path="/login" element={<Login />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-            </Route> */}
+        <Route element={<IsLogged />}>
+        <Route path="/register" element={<Register/>} />
+          <Route path="/login" element={<Login />} />
+        </Route>
         <Route >
           <Route
             path='/*'
@@ -30,7 +53,9 @@ function App() {
                 >
                   <Navbar />
                   <div style={{ height: "calc(100dvh - 80px)" }}>
-                    {/* <AppRoutes /> */}
+                    <Routes element={<ProtectedRoute/>}>
+                      <Route path="/" element={<User />} />
+                    </Routes>
                   </div>
                 </Box>
               </Box>
